@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageType, TerminalLine } from '../types';
 import { simulateTerminalCommand } from '../services/geminiService';
 
-const ASCII_LOGO = `
-  ____                           _   _     _            
- |  _ \\ _ __ ___  _ __ ___  _ __| |_| |   (_)_ __   ___ 
- | |_) | '__/ _ \\| '_ \` _ \\| '_ \\ __| |   | | '_ \\ / _ \\
- |  __/| | | (_) | | | | | | |_) | |_| |___| | | | |  __/
- |_|   |_|  \\___/|_| |_| |_| .__/ \\__|_____|_|_| |_|\\___|
-                           |_|                           
+const ASCII_LOGO = ` ▄▄▄▄▄▄▄ ▄▄▄▄▄▄   ▄▄▄▄▄▄▄ ▄▄   ▄▄ ▄▄▄▄▄▄  ▄▄▄▄▄▄▄ ▄     ▄ ▄▄    ▄ ▄▄▄▄▄▄▄ 
+█       █   ▄  █ █       █  █▄█  █      ██       █ █   █ █  █  █ █       █
+█    ▄▄▄█  █ █ █ █   ▄   █       █  ▄    █▄     ▄█ █   █ █   █▄█ █    ▄▄▄█
+█   █▄▄▄█   █▄▄█▄█  █ █  █       █ █ █   █ █   █ █ █   █ █       █   █▄▄▄ 
+█    ▄▄▄█    ▄▄  █  █▄█  █       █ █▄█   █ █   █ █ █▄▄▄█ █  ▄    █    ▄▄▄█
+█   █   █   █  █ █       █ ██▄██ █       █ █   █ █       █ █ █   █   █▄▄▄ 
+█▄▄▄█   █▄▄▄█  █▄█▄▄▄▄▄▄▄█▄█   █▄█▄▄▄▄▄▄██ █▄▄▄█ █▄▄▄▄▄▄▄█▄█  █▄▄█▄▄▄▄▄▄▄█
 `;
 
 const TerminalDemo: React.FC = () => {
@@ -90,20 +90,19 @@ const TerminalDemo: React.FC = () => {
   };
 
   // Helper to colorize output based on simple heuristics
-  const renderContent = (content: string) => {
-    // Special handling for the ASCII Logo to ensure it stays blue and bold
-    if (content === ASCII_LOGO) {
-      return <div className="text-blue-500 font-bold leading-tight whitespace-pre hidden sm:block select-none mb-4">{content}</div>;
+  const renderContent = (content: string, isLogo: boolean = false) => {
+    // Special handling for ASCII logo
+    if (isLogo) {
+      return <div className="text-blue-400 leading-none whitespace-pre select-none mb-2">{content}</div>;
     }
 
     return content.split('\n').map((line, i) => {
-      let className = "text-terminal-text";
-      if (line.includes('[THOUGHT]')) className = "text-terminal-blue italic";
-      else if (line.includes('[ACTION]')) className = "text-terminal-yellow";
-      else if (line.includes('[SUCCESS]')) className = "text-terminal-green font-bold";
-      else if (line.includes('[ERROR]') || line.includes('[FATAL]')) className = "text-terminal-red";
-      else if (line.includes('[INFO]')) className = "text-terminal-dim";
-      else if (line.includes('PromptLine v0.1.0')) className = "text-terminal-green font-bold"; // Highlight version line
+      let className = "text-gray-400";
+      if (line.includes('[THOUGHT]')) className = "text-blue-400 italic";
+      else if (line.includes('[ACTION]')) className = "text-yellow-400";
+      else if (line.includes('[SUCCESS]')) className = "text-green-400 font-bold";
+      else if (line.includes('[ERROR]') || line.includes('[FATAL]')) className = "text-red-400";
+      else if (line.includes('PromptLine v0.1.0')) className = "text-green-400"; // Highlight version line
       
       return <div key={i} className={`${className} whitespace-pre-wrap`}>{line}</div>;
     });
@@ -123,17 +122,18 @@ const TerminalDemo: React.FC = () => {
       </div>
 
       {/* Terminal Body */}
-      <div ref={terminalBodyRef} className="p-4 h-[400px] overflow-y-auto custom-scrollbar flex flex-col space-y-2">
+      <div ref={terminalBodyRef} className="p-4 h-[400px] overflow-y-auto custom-scrollbar flex flex-col space-y-1">
         {history.map((line) => (
           <div key={line.id} className="flex flex-col">
             {line.type === MessageType.USER_COMMAND ? (
-              <div className="flex items-center text-white font-bold mt-2">
-                <span className="text-terminal-green mr-2">➜</span>
-                <span className="text-terminal-blue mr-2">~</span>
+              <div className="flex items-start text-white mt-2">
+                <span className="text-white mr-2">~</span>
                 {line.content}
               </div>
+            ) : line.id === 'init-logo' ? (
+              renderContent(line.content, true)
             ) : (
-              <div className="pl-4 border-l-2 border-gray-800 ml-1 mt-1">
+              <div>
                 {renderContent(line.content)}
               </div>
             )}
@@ -141,7 +141,7 @@ const TerminalDemo: React.FC = () => {
         ))}
         
         {isProcessing && (
-           <div className="flex items-center pl-4 text-terminal-dim animate-pulse">
+           <div className="flex items-center text-gray-500 animate-pulse mt-2">
              <span className="mr-2">●</span> Processing agent loop...
            </div>
         )}
@@ -150,15 +150,13 @@ const TerminalDemo: React.FC = () => {
       {/* Input Area */}
       <div className="bg-[#0d1117] p-4 border-t border-gray-800">
         <form onSubmit={handleCommand} className="flex items-center">
-          <span className="text-terminal-green mr-2">➜</span>
-          <span className="text-terminal-blue mr-2">~</span>
-          <span className="text-white font-bold mr-2">promptline</span>
+          <span className="text-white mr-2">~</span>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder='Try "analyze current directory" or "write a test for auth"'
-            className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-600 font-mono caret-terminal-green"
+            placeholder='Type a command to see the agent in action (e.g., "refactor main.rs" or "explain this code")'
+            className="flex-1 bg-transparent border-none outline-none text-white placeholder-gray-600 font-mono caret-white"
             autoFocus
             disabled={isProcessing}
           />

@@ -91,37 +91,37 @@ const Installation: React.FC = () => {
               {activeOS === 'unix' ? (
                 <>
                   <CodeBlock 
-                    id="install-curl"
-                    label="Option 1: Quick Install (Curl)"
-                    code="curl -fsSL https://promptline.dev/install.sh | sh"
-                  />
-                  <CodeBlock 
-                    id="install-brew"
-                    label="Option 2: Homebrew"
-                    code={`brew tap promptline/tap\nbrew install promptline`}
+                    id="install-clone"
+                    label="Option 1: Clone & Build (Recommended)"
+                    code={`git clone https://github.com/deepmroot/promptline-rust.git\ncd promptline-rust\ncargo install --path .`}
                   />
                   <CodeBlock 
                     id="install-cargo-unix"
-                    label="Option 3: Cargo (Build from Source)"
-                    code={`git clone https://github.com/yourusername/promptline-rust\ncd promptline-rust\ncargo install --path .`}
+                    label="Option 2: Direct Cargo Install (Coming Soon)"
+                    code="cargo install promptline"
+                  />
+                  <CodeBlock 
+                    id="verify-install"
+                    label="Verify Installation"
+                    code="promptline --version"
                   />
                 </>
               ) : (
                 <>
                    <CodeBlock 
-                    id="install-powershell"
-                    label="Option 1: PowerShell (IRM)"
-                    code="iwr https://promptline.dev/install.ps1 -useb | iex"
-                  />
-                  <CodeBlock 
-                    id="install-winget"
-                    label="Option 2: WinGet"
-                    code={`winget install promptline`}
+                    id="install-clone-win"
+                    label="Option 1: Clone & Build (Recommended)"
+                    code={`git clone https://github.com/deepmroot/promptline-rust.git\ncd promptline-rust\ncargo install --path .`}
                   />
                   <CodeBlock 
                     id="install-cargo-win"
-                    label="Option 3: Cargo (Build from Source)"
-                    code={`git clone https://github.com/yourusername/promptline-rust\ncd promptline-rust\ncargo install --path .`}
+                    label="Option 2: Direct Cargo Install (Coming Soon)"
+                    code="cargo install promptline"
+                  />
+                  <CodeBlock 
+                    id="verify-install-win"
+                    label="Verify Installation"
+                    code="promptline --version"
                   />
                 </>
               )}

@@ -21,7 +21,10 @@ import {
   Save,
   Lock,
   Eye,
-  RefreshCw
+  RefreshCw,
+  Users,
+  Heart,
+  MessageCircle
 } from 'lucide-react';
 
 export { 
@@ -46,5 +49,8 @@ export {
   Save,
   Lock,
   Eye,
-  RefreshCw
+  RefreshCw,
+  Users,
+  Heart,
+  MessageCircle
 };

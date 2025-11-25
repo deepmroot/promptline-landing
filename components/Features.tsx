@@ -15,9 +15,9 @@ const features = [
   },
   {
     title: "Multi-Model Support",
-    desc: "Seamlessly switch between OpenAI, Anthropic, and local LLMs like Ollama or llama.cpp.",
+    desc: "Seamlessly switch between OpenAI and local LLMs via Ollama.",
     icon: <Zap className="w-6 h-6 text-yellow-400" />,
-    detail: "Avoid vendor lock-in. PromptLine abstracts the LLM provider layer, allowing you to swap between GPT-4 for complex reasoning and local Llama 3 for sensitive, private codebases without changing your workflow.",
+    detail: "Avoid vendor lock-in. PromptLine supports OpenAI for powerful cloud-based reasoning and Ollama for running local models like Llama 3 on your machine. Perfect for sensitive, private codebases without changing your workflow.",
     code: `// config.yaml
 models:
   default: "ollama/llama3"

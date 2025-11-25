@@ -19,9 +19,10 @@ const Header: React.FC = () => {
           <a href="#features" className="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
           <a href="#installation" className="text-sm text-gray-400 hover:text-white transition-colors">Install</a>
           <a href="#demo" className="text-sm text-gray-400 hover:text-white transition-colors">Demo</a>
+          <a href="#community" className="text-sm text-gray-400 hover:text-white transition-colors">Community</a>
           <a href="#roadmap" className="text-sm text-gray-400 hover:text-white transition-colors">Roadmap</a>
           <a 
-            href="https://github.com" 
+            href="https://github.com/deepmroot/promptline-rust" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center space-x-2 bg-white text-black px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
@@ -44,8 +45,9 @@ const Header: React.FC = () => {
             <a href="#features" className="text-gray-400 hover:text-white" onClick={() => setIsOpen(false)}>Features</a>
             <a href="#installation" className="text-gray-400 hover:text-white" onClick={() => setIsOpen(false)}>Install</a>
             <a href="#demo" className="text-gray-400 hover:text-white" onClick={() => setIsOpen(false)}>Demo</a>
+            <a href="#community" className="text-gray-400 hover:text-white" onClick={() => setIsOpen(false)}>Community</a>
             <a href="#roadmap" className="text-gray-400 hover:text-white" onClick={() => setIsOpen(false)}>Roadmap</a>
-             <a href="https://github.com" className="flex items-center space-x-2 text-white font-medium" onClick={() => setIsOpen(false)}>
+             <a href="https://github.com/deepmroot/promptline-rust" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2 text-white font-medium" onClick={() => setIsOpen(false)}>
                 <Github size={16} />
                 <span>Star on GitHub</span>
             </a>
